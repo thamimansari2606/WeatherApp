@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App ☔</title>
+    <link rel="icon" href="icon.png">
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            font-family: "Montserrat", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 600;
+            font-style: normal;
+            background: linear-gradient(180deg, #E0F2FE 0%, #F8FAFC 100%);
+        }
+
+        .main {
+            width: 90vw;
+            height: 90vh;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            position: relative;
+            left: 5vw;
+            top: 5vh;
+            color: #0F172A;
+            transition: background 0.8s ease-in-out;
+        }
+
+        #city_name {
+            width: 30vw;
+            height: 10vh;
+            text-align: center;
+            position: absolute;
+            left: 30vw;
+            top: 5vh;
+            font-size: larger;
+            border-radius: 30px;
+            font-weight: 600;
+            border: 2px solid #CBD5E1;
+        }
+
+        #city_name:hover {
+            border-color: #0F172A;
+        }
+
+        .main button {
+            position: absolute;
+            left: 38vw;
+            top: 20vh;
+            width: 15vw;
+            height: 8vh;
+            font-size: x-large;
+            border-radius: 30px;
+            background-color: #3B82F6;
+            color: #ffffff;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .main button:hover {
+            background-color: #0288D1;
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+        }
+
+        .flex {
+            width: 60vw;
+            position: absolute;
+            left: 15vw;
+            top: 30vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .flex1 {
+            width: 60vw;
+            position: absolute;
+            left: 17vw;
+            bottom: 5vh;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .flex1 h1 {
+            gap: 6px;
+        }
+
+        span {
+            position: absolute;
+            top: 33vh;
+            font-size: x-large;
+        }
+
+        #degree {
+            font-size: 64px;
+            font-weight: 700;
+            position: absolute;
+            top: 8vh;
+            animation: animate 1s ease-in-out 0.5s infinite;
+        }
+
+        #district {
+            font-size: 40px;
+        }
+
+        @keyframes animate {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+        #loader{
+            position: absolute;
+            left: 43vw;
+            top: 50vh;
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #2EC4B6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none;
+        }
+        @keyframes spin {
+            to{
+                transform: rotate(360deg);
+            }
+        }
+        #txt_load{
+            position: absolute;
+            left: 39vw;
+            top: 62vh;
+            display: none;
+        }
+
+        @media (min-width:320px) and (max-width:480px){
+            #city_name{width: 50vw;height: 7vh;left: 20vw;font-size: small;}
+            .main button{width: 30vw;font-size: small;left: 30vw;height: 5vh;top: 15vh;text-align: center;}
+            #loader{left: 36vw;top: 40vh;}
+            #txt_load{left: 22vw;top: 55vh;}
+            .flex{top: 20vh;}
+            #district{font-size: 30px;}
+            #degree{font-size: 40px;}
+            span{font-size: medium;top: 30vh;}
+            .flex1{flex-direction: column;font-size: small;justify-content: center;}
+        }
+        @media (min-width:481px) and (max-width:768px){
+            #city_name{width: 50vw;height: 7vh;left: 20vw;font-size: medium;}
+            .main button{width: 30vw;font-size: medium;left: 30vw;height: 7vh;top: 15vh;text-align: center;font-weight: bold;}
+            #loader{left: 40vw;top: 40vh;}
+            #txt_load{left: 30vw;top: 55vh;}
+            .flex{top: 23vh;}
+            #district{font-size: 30px;}
+            #degree{font-size: 40px;}
+            span{font-size: medium;top: 30vh;}
+            .flex1{flex-direction: column;font-size: small;justify-content: center;}
+        }
+        @media (min-width:769px) and (max-width:1024px){
+            #city_name{width: 50vw;height: 7vh;left: 20vw;font-size: medium;}
+            .main button{width: 30vw;font-size: medium;left: 30vw;height: 7vh;top: 15vh;text-align: center;font-weight: bold;}
+            #loader{left: 40vw;top: 40vh;}
+            #txt_load{left: 33vw;top: 55vh;}
+            .flex{top: 23vh;}
+            #district{font-size: 30px;}
+            #degree{font-size: 50px;}
+            span{font-size: medium;top: 30vh;}
+            .flex1{flex-direction: column;font-size: small;justify-content: center;}
+        }
+    </style>
+    </style>
+
+</head>
+
+<body>
+    <div class="main" id="div">
+        <input type="text" placeholder="🔎︎ Enter city name" id="city_name">
+        <button onclick="api()" id="search_btn">Search 🔎︎</button>
+        <div id="loader"></div>
+        <p id="txt_load">Getting Live Weather...</p>
+        <div class="flex" id="d1">
+            <h1 id="district"></h1>
+            <h1 id="degree">Weather App☔</h1>
+            <span id="icon"></span>
+        </div>
+        <div class="flex1" id="d2">
+            <h1 id="humidity"></h1>
+            <h1 id="wind_speed"></h1>
+        </div>
+    </div>
+
+    <script>
+        
+        async function api() {
+            let loader=document.getElementById("loader")
+            loader.style.display="block"
+            let flex=document.getElementById("d1")
+            flex.style.display="none"
+            let flex1=document.getElementById("d2")
+            flex1.style.display="none"
+            document.getElementById('div').style.background ="#ffffff"
+            document.getElementById('txt_load').style.display="block"
+            document.getElementById('search_btn').style.display='none';
+            try {
+                let name = document.getElementById('city_name').value;
+                let response = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${name}&temperature`)
+                let data = await response.json()
+                let data_set = data.results[0]
+                let lat = data_set.latitude;
+                let long = data_set.longitude;
+                const api_temp = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&current=temperature_2m,wind_speed_10m,relative_humidity_2m,weather_code`
+                let response_temp = await fetch(api_temp)
+                let data_temp = await response_temp.json()
+                let data_set_temp = data_temp.current
+                document.getElementById('district').innerText = data_set.name
+                document.getElementById('degree').innerText = data_set_temp.temperature_2m + "°C"
+                document.getElementById('humidity').innerText = "💧 " + data_set_temp.relative_humidity_2m + " %"
+                document.getElementById('wind_speed').innerText = "🌬️ " + data_set_temp.wind_speed_10m + " km/h"
+                if (data_set_temp.temperature_2m >= 35) {
+                    document.getElementById('div').style.background = "linear-gradient(135deg,#f12711,#f5af19)"
+                    document.getElementById('div').style.color = ' #0F172A'
+                }
+                else if (data_set_temp.temperature_2m >= 25) {
+                    document.getElementById('div').style.background = "linear-gradient(135deg,#56CCF2,#2F80ED)"
+                    document.getElementById('div').style.color = ' #0F172A'
+                }
+                else if (data_set_temp.temperature_2m >= 15) {
+                    document.getElementById('div').style.background = "linear-gradient(135deg,#74ebd5,#ACB6E5)"
+                    document.getElementById('div').style.color = ' #0F172A'
+                }
+                else if (data_set_temp.temperature_2m >= 5) {
+                    document.getElementById('div').style.background = "linear-gradient(135deg,#bcd3c7,#2c3e50)"
+                    document.getElementById('div').style.color = ' #0F172A'
+                }
+                else {
+                    document.getElementById('div').style.background = "linear-gradient(135deg,#0f2027,#203a43,#2c5364)"
+                    document.getElementById('div').style.color = 'white'
+
+                }
+                switch (data_set_temp.weather_code) {
+                    case 0:
+                        var icon = '☀️'
+                        document.getElementById('icon').innerText = 'Condition : Clear Sky'
+                        break;
+                    case 1:
+                    case 2:
+                        var icon = '🌤️';
+                        document.getElementById('icon').innerText = 'Condition : Partly Cloudy'
+                        break;
+                    case 3:
+                        var icon = '☁️';
+                        document.getElementById('icon').innerText = 'Condition : Overcast'
+                        break;
+                    case 45:
+                    case 48:
+                        var icon = '🌫️';
+                        document.getElementById('icon').innerText = 'Condition : Foggy'
+                        break;
+                    case 51:
+                    case 53:
+                    case 55:
+                        var icon = '🌦️';
+                        document.getElementById('icon').innerText = 'Condition : Light Drizzle'
+                        break;
+                    case 61:
+                    case 63:
+                    case 65:
+                        var icon = '🌧️';
+                        document.getElementById('icon').innerText = 'Condition : Rainy'
+                        break;
+                    case 95:
+                    case 96:
+                    case 99:
+                        var icon = '⛈️';
+                        document.getElementById('icon').innerText = 'Condition : Thunderstorm'
+                        break;
+                    case 71:
+                    case 73:
+                    case 75:
+                    case 77:
+                        var icon = '❄️';
+                        document.getElementById('icon').innerText = 'Condition : Snowfall'
+                        break;
+                    default:
+                        var icon = '🌤️';
+                        document.getElementById('icon').innerText = 'Condition : Partly Cloudy (Unstable)'
+                        break;
+
+                }
+                document.getElementById('degree').innerText = icon + data_set_temp.temperature_2m + "°C";
+            }
+            catch (err) {
+                document.getElementById('district').innerText = "City Not Found⚠️."
+                document.getElementById('degree').innerText ="𝐓𝐑𝐘 𝐀𝐆𝐀𝐈𝐍 ﹕↻";
+                flex1.style.display="none"
+                document.getElementById('search_btn').style.display='block';
+            }
+            finally {
+                loader.style.display="none"
+                flex.style.display="flex"
+                flex1.style.display="flex"
+                document.getElementById('txt_load').style.display="none"
+                document.getElementById('city_name').value="";
+                document.getElementById('search_btn').style.display='block';
+            }
+
+        }
+
+
+    </script>
+</body>
+
+</html>
