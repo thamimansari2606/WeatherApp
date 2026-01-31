@@ -77,6 +77,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            text-align: center;
         }
 
         .flex1 {
@@ -156,7 +157,7 @@
             .flex{top: 20vh;}
             #district{font-size: 30px;text-align:center;}
             #degree{font-size: 35px;}
-            span{font-size: large;top: 30vh;}
+            span{font-size: large;top: 30vh;font-weight:bold;}
             .flex1{flex-direction: column;font-size: small;justify-content: center;bottom:10vh;}
         }
         @media (min-width:481px) and (max-width:768px){
@@ -167,7 +168,7 @@
             .flex{top: 23vh;}
             #district{font-size: 30px;}
             #degree{font-size: 40px;}
-            span{font-size:large;top: 30vh;}
+            span{font-size:large;top: 30vh;font-weight:bold;}
             .flex1{flex-direction: column;font-size: small;justify-content: center;}
         }
         @media (min-width:769px) and (max-width:1024px){
@@ -178,7 +179,7 @@
             .flex{top: 23vh;}
             #district{font-size: 30px;}
             #degree{font-size: 50px;}
-            span{font-size: large;top: 30vh;}
+            span{font-size: large;top: 30vh;font-weight:bold;}
             .flex1{flex-direction: column;font-size: small;justify-content: center;}
         }
     </style>
@@ -215,8 +216,21 @@
             document.getElementById('div').style.background ="#ffffff"
             document.getElementById('txt_load').style.display="block"
             document.getElementById('search_btn').style.display='none';
+            
             try {
                 let name = document.getElementById('city_name').value;
+                if(name==""){
+                    document.getElementById('district').innerText="⚠️Please enter a city name";
+                    document.getElementById('district').style.color='#8A4B00'
+                    document.getElementById('div').style.backgroundColor ="FFE5B4"
+                    document.getElementById('degree').style.display='none'
+                    loader.style.display="none"
+                    document.getElementById('txt_load').style.display="none"
+                    document.getElementById('search_btn').style.display='block';
+                    flex.style.display='flex'
+                    document.getElementById('icon').innerText="↻ Try Again!"
+                }
+                else{
                 let response = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${name}&temperature`)
                 let data = await response.json()
                 let data_set = data.results[0]
@@ -248,7 +262,7 @@
                 }
                 else {
                     document.getElementById('div').style.background = "linear-gradient(135deg,#0f2027,#203a43,#2c5364)"
-                    document.getElementById('div').style.color = 'white'
+                    
 
                 }
                 switch (data_set_temp.weather_code) {
@@ -301,26 +315,36 @@
                         break;
 
                 }
+                document.getElementById('degree').style.display='block'
                 document.getElementById('degree').innerText = icon + data_set_temp.temperature_2m + "°C";
-            }
-            catch (err) {
-                document.getElementById('district').innerText = "City Not Found⚠️."
-                document.getElementById('degree').innerText ="𝐓𝐑𝐘 𝐀𝐆𝐀𝐈𝐍 ﹕↻";
-                flex1.style.display="none"
-                document.getElementById('search_btn').style.display='block';
-            }
-            finally {
                 loader.style.display="none"
                 flex.style.display="flex"
                 flex1.style.display="flex"
                 document.getElementById('txt_load').style.display="none"
                 document.getElementById('city_name').value="";
                 document.getElementById('search_btn').style.display='block';
+                document.getElementById('district').style.color='#0F172A';
             }
-
+            }
+            catch (err) {
+                //alert("Please Check the Spelling")
+                document.getElementById('district').innerText="City not Found⚠️. Please Check the Spelling🕵🏻‍♀️"
+                document.getElementById('district').style.color='#495057'
+                document.getElementById('district').style.fontSize='20px'
+                document.getElementById('div').style.backgroundColor ="FFE5B4"
+                document.getElementById('icon').innerText="↻ Try Again!"
+                flex.style.display='flex'
+                loader.style.display="none"
+                document.getElementById('txt_load').style.display="none"
+                flex1.style.display="none"
+                document.getElementById('search_btn').style.display='block';
+                document.getElementById('degree').style.display='none'
+                document.getElementById('city_name').value="";
+                }
+                
         }
 
-
+        
     </script>
 </body>
 
