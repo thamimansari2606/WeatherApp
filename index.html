@@ -89,6 +89,9 @@
             justify-content: space-evenly;
             align-items: center;
             margin-top: 20px;
+            background-color: #ffffff;
+            border-radius: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
         }
 
         .flex1 h1 {
@@ -152,13 +155,13 @@
         @media (min-width:320px) and (max-width:480px){
             #city_name{width: 50vw;height: 7vh;left: 20vw;font-size: small;}
             .main button{width: 30vw;font-size: small;left: 30vw;height: 5vh;top: 15vh;text-align: center;}
-            #loader{left: 36vw;top: 40vh;}
-            #txt_load{left: 22vw;top: 55vh;}
+            #loader{left: 38vw;top: 40vh;}
+            #txt_load{left: 25vw;top: 55vh;}
             .flex{top: 20vh;}
             #district{font-size: 30px;text-align:center;}
             #degree{font-size: 35px;}
             span{font-size: large;top: 30vh;font-weight:bold;}
-            .flex1{flex-direction: column;font-size: small;justify-content: center;bottom:10vh;}
+            .flex1{flex-direction: column;font-size: small;justify-content: center;bottom:7vh;}
         }
         @media (min-width:481px) and (max-width:768px){
             #city_name{width: 50vw;height: 7vh;left: 20vw;font-size: medium;}
@@ -244,6 +247,7 @@
                 document.getElementById('degree').innerText = data_set_temp.temperature_2m + "°C"
                 document.getElementById('humidity').innerText = "💧 " + data_set_temp.relative_humidity_2m + " %"
                 document.getElementById('wind_speed').innerText = "🌬️ " + data_set_temp.wind_speed_10m + " km/h"
+                document.getElementById('district').style.color='#0F172A';
                 if (data_set_temp.temperature_2m >= 35) {
                     document.getElementById('div').style.background = "linear-gradient(135deg,#f12711,#f5af19)"
                     document.getElementById('div').style.color = ' #0F172A'
@@ -262,8 +266,9 @@
                 }
                 else {
                     document.getElementById('div').style.background = "linear-gradient(135deg,#0f2027,#203a43,#2c5364)"
-                    
-
+                    document.getElementById('div').style.color = ' #ffffff'
+                    document.getElementById('district').style.color = ' #ffffff'
+                    document.getElementById('d2').style.color = ' #0F172A'
                 }
                 switch (data_set_temp.weather_code) {
                     case 0:
@@ -323,7 +328,7 @@
                 document.getElementById('txt_load').style.display="none"
                 document.getElementById('city_name').value="";
                 document.getElementById('search_btn').style.display='block';
-                document.getElementById('district').style.color='#0F172A';
+                
             }
             }
             catch (err) {
